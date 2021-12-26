@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  schedule-db:
+    container_name: schedule-db
+    build: ./db
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_USER: mtuci
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: mtuci
+    ports:
+      - 5444:5432
+
+  app:
+    container_name: app
+    build: ./app
+    volumes:
+      - ./app:/code
+    depends_on:
+      - schedule-db
